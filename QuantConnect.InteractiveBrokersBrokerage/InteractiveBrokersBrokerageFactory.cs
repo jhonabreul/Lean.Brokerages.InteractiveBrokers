@@ -88,7 +88,9 @@ namespace QuantConnect.Brokerages.InteractiveBrokers
                 loadExistingHoldings = Convert.ToBoolean(job.BrokerageData["load-existing-holdings"]);
             }
 
-            TimeSpan? weeklyRestartUtcTime = null;
+            // This default just for testing
+            TimeSpan? weeklyRestartUtcTime = new TimeSpan(22, 0, 0);
+            //TimeSpan? weeklyRestartUtcTime = null;
             if (job.BrokerageData.TryGetValue("ib-weekly-restart-utc-time", out var weeklyRestartUtcTimeStr) &&
                 !string.IsNullOrEmpty(weeklyRestartUtcTimeStr))
             {
