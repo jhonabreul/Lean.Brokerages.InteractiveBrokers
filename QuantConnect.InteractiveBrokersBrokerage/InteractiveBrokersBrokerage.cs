@@ -53,6 +53,7 @@ using Order = QuantConnect.Orders.Order;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using QuantConnect.Data.Auxiliary;
+using ProtoBuf.WellKnownTypes;
 
 namespace QuantConnect.Brokerages.InteractiveBrokers
 {
@@ -3846,7 +3847,7 @@ namespace QuantConnect.Brokerages.InteractiveBrokers
                     return;
                 }
 
-                var delay = GetRestartDelay();
+                var delay = TimeSpan.FromMinutes(1);
                 Log.Trace($"InteractiveBrokersBrokerage.StartGatewayRestartTask(): start restart in: {delay}...");
 
                 // we take the lock to avoid it getting disposed while consumers are evaluating it
@@ -4055,6 +4056,8 @@ namespace QuantConnect.Brokerages.InteractiveBrokers
                     OnMessage(new BrokerageMessageEvent(BrokerageMessageType.Error, "IBAutomaterAutoRestartError", exception.ToString()));
                 }
             }
+
+            StartGatewayRestartTask();
         }
 
         public static DateTime GetNextSundayFromDate(DateTime date)
